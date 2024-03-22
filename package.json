@@ -1,13 +1,13 @@
 {
-  "name": "wait-for-process",
-  "displayName": "wait-for-process",
+  "name": "wait-for-process-fork",
+  "displayName": "wait-for-process (fork)",
   "description": "Defines a command which allows you to wait for a process to be running with a specific name or which links to a specific dll, primarily designed to be used by an Attach debug configuration",
-  "publisher": "mauve",
-  "version": "0.0.6",
+  "publisher": "tomashu",
+  "version": "0.1.0",
   "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mauve/vscode-wait-for-process"
+    "url": "https://github.com/TomashuTTTT7/vscode-wait-for-process"
   },
   "engines": {
     "vscode": "^1.37.0"
@@ -18,13 +18,13 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:wait-for-process.wait"
+    "onCommand:wait-for-process-fork.wait"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "wait-for-process.wait",
+        "command": "wait-for-process-fork.wait",
         "title": "Wait for process"
       }
     ]

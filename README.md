@@ -1,6 +1,6 @@
 # wait-for-process
 
-This very small extensions exposes a vscode command called `wait-for-process.wait` which is primarily
+This very small extensions exposes a vscode command called `wait-for-process-fork.wait` which is primarily
 designed to be used by a Attach to debugger launch configuration when debugging native modules.
 
 The command returns the PID of a matching process, either by matching by process name (e.g. `node.exe`)
@@ -31,14 +31,14 @@ Let's say you have a native node addon, called `my_addon.node` which you want to
     {
       "id": "processId",
       "type": "command",
-      "command": "wait-for-process.wait",
+      "command": "wait-for-process-fork.wait",
       "args": { "moduleName": "my_addon.node" }
     }
   ]
 }
 ```
 
-The above configuration (named `(Windows) to my_addon.node`) uses the _input_ `processId` to call the command `wait-for-process.wait`
+The above configuration (named `(Windows) to my_addon.node`) uses the _input_ `processId` to call the command `wait-for-process-fork.wait`
 (contributed by this plugin) to discover a process which loads the DLL `my_addon.node`.
 
 The possible arguments to the command are:
@@ -81,7 +81,7 @@ using v8::String;
 
 NAN_METHOD(Hello)
 {
-    info.GetReturnValue().Set(New<String>(World").ToLocalChecked());
+    info.GetReturnValue().Set(New<String>("World").ToLocalChecked());
 }
 
 NAN_MODULE_INIT(InitAll)
