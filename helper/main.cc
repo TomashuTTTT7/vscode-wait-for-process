@@ -22,7 +22,7 @@ void PrintProcessInfo(DWORD processID) {
         TCHAR szModuleName[MAX_PATH] = TEXT("<unknown>");
         GetModuleBaseName(hProcess, hMods[i], szModuleName,
                           sizeof(szModuleName) / sizeof(TCHAR));
-        _tprintf(TEXT("%u:%u:%s:%s\n"), processID, i, szProcessName,
+        _tprintf(TEXT("%lu:%lu:%s:%s\n"), processID, i, szProcessName,
                  szModuleName);
       }
     }
