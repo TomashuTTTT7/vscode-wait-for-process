@@ -1,3 +1,7 @@
+# wait-for-process-fork
+
+This repository is a fork. Check changelog to see changes i made.
+
 # wait-for-process
 
 This very small extensions exposes a vscode command called `wait-for-process-fork.wait` which is primarily
