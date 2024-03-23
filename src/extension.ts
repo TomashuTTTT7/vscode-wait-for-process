@@ -90,16 +90,22 @@ async function watchForMatchingProcess(helperPath: string, options: { processNam
 		waitMessage = `Waiting for process with module ${options.moduleName}`;
 	}
 
-	return await vscode.window.withProgress({ cancellable: false, location: vscode.ProgressLocation.Notification }, async (progress) => {
-		for (let i = 0; i < 60; ++i) {
-			progress.report({ message: waitMessage, increment: i * 10 });
+	return await vscode.window.withProgress({ cancellable: true, location: vscode.ProgressLocation.Notification, title: waitMessage }, async (progress, token) => {
+		let timelimit = 60000;
+		let period = 500;
+		let prog = 0;
+		for (let time = 0; time <= timelimit && !token.isCancellationRequested; time += period) {
+			let prognew = (time*100)/timelimit;
+			progress.report({ increment: prognew - prog });
+			prog = prognew;
+			
 			const matches = await getMatchingProcesses(helperPath, options);
 			if (matches.length > 0) {
 				return matches;
 			}
 
 			console.log("No matching processes, trying again");
-			await timeout(500);
+			await timeout(period);
 		}
 
 		return [];
@@ -107,21 +113,15 @@ async function watchForMatchingProcess(helperPath: string, options: { processNam
 }
 
 export function activate(context: vscode.ExtensionContext) {
-	let disposable = vscode.commands.registerCommand('wait-for-process.wait', async (options: { processName?: string, moduleName?: string }) => {
+	let disposable = vscode.commands.registerCommand('wait-for-process-fork.wait', async (options: { processName?: string, moduleName?: string }) => {
 		options = options || {};
 
-		let helperPaths = [
-			path.join(context.extensionPath, 'helper', 'build', 'Debug', 'wait-for-process.exe'),
-			path.join(context.extensionPath, 'helper', 'build', 'Release', 'wait-for-process.exe'),
-			path.join(context.extensionPath, 'helper', 'wait-for-process.exe'),
-		];
+		const helperPath = path.join(context.extensionPath, 'helper', 'wait-for-process.exe');
 
-		const existingHelpers = helperPaths.filter((p) => fs.existsSync(p));
-		if (existingHelpers.length === 0) {
+		if (!fs.existsSync(helperPath)) {
 			vscode.window.showErrorMessage('Helper not available');
 			return;
 		}
-		const helperPath = existingHelpers[0];
 
 		const processes = await watchForMatchingProcess(helperPath, options);
 		if (processes.length === 0) {
