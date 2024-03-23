@@ -30,6 +30,7 @@
     ]
   },
   "scripts": {
+    "build-helper": "node scripts/build-helper.js",
     "vscode:prepublish": "yarn run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
