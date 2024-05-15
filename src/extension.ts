@@ -25,8 +25,17 @@ type ModuleInfo = {
 	moduleName: string
 };
 
-async function enumerateProcesses(helperPath: string): Promise<ModuleInfo[]> {
-	const output = await execFileAsync(helperPath, []);
+type HelperOptions =  { processName?: string, moduleName?: string };
+
+async function enumerateProcesses(helperPath: string, options: HelperOptions): Promise<ModuleInfo[]> {
+	let args = [];
+	if (options.processName) {
+		args.push("processName=" + options.processName);
+	}
+	if (options.moduleName) {
+		args.push("moduleName=" + options.moduleName);
+	}
+	const output = await execFileAsync(helperPath, args);
 	const lines = output.split('\n');
 
 	return lines.map((line) => {
@@ -43,8 +52,8 @@ async function enumerateProcesses(helperPath: string): Promise<ModuleInfo[]> {
 
 const timeout = (ms: number) => new Promise(res => setTimeout(res, ms));
 
-async function getMatchingProcesses(helperPath: string, options: { processName?: string, moduleName?: string }): Promise<ModuleInfo[]> {
-	const moduleInfos = await enumerateProcesses(helperPath);
+async function getMatchingProcesses(helperPath: string, options: HelperOptions): Promise<ModuleInfo[]> {
+	const moduleInfos = await enumerateProcesses(helperPath, options);
 
 	if (options.moduleName === "ntdll.dll") {
 		// everybody links to ntdll.dll, therefore remove the filter
