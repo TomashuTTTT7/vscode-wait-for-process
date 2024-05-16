@@ -6,8 +6,8 @@
 #include <tchar.h>
 // clang-format on
 
-void PrintProcessInfo(DWORD processID, char *expected_process_name,
-                      char *expected_module_name) {
+void PrintProcessInfo(DWORD processID, TCHAR *expected_process_name,
+                      TCHAR *expected_module_name) {
   HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ,
                                 FALSE, processID);
 
@@ -22,7 +22,7 @@ void PrintProcessInfo(DWORD processID, char *expected_process_name,
                         sizeof(szProcessName) / sizeof(TCHAR));
 
       if (expected_process_name &&
-          strcmp(szProcessName, expected_process_name) != 0) {
+          _tcscmp(szProcessName, expected_process_name) != 0) {
         CloseHandle(hProcess);
         return;
       }
@@ -33,7 +33,7 @@ void PrintProcessInfo(DWORD processID, char *expected_process_name,
                           sizeof(szModuleName) / sizeof(TCHAR));
 
         if (expected_module_name) {
-          if (strcmp(szModuleName, expected_module_name) != 0)
+          if (_tcscmp(szModuleName, expected_module_name) != 0)
             continue;
         }
 
@@ -46,19 +46,19 @@ void PrintProcessInfo(DWORD processID, char *expected_process_name,
   CloseHandle(hProcess);
 }
 
-int main(int argc, char *argv[]) {
+int _tmain(int argc, TCHAR *argv[]) {
   DWORD aProcesses[1024], cbNeeded, cProcesses;
 
   if (!EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded)) {
     return 1;
   }
 
-  char* expected_process = NULL;
-  char* expected_module = NULL;
+  TCHAR* expected_process = NULL;
+  TCHAR* expected_module = NULL;
   for (int i = 0; i < argc; i++) {
-    if (strcmp(argv[i], "processName=") >= 0) {
+    if (_tcscmp(argv[i], TEXT("processName=")) >= 0) {
       expected_process = &argv[i][12];
-    } else if (strcmp(argv[i], "moduleName=") >= 0) {
+    } else if (_tcscmp(argv[i], TEXT("moduleName=")) >= 0) {
       expected_module = &argv[i][11];
     }
   }
