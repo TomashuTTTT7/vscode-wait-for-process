@@ -105,4 +105,4 @@ NODE_MODULE(addon, InitAll)
 
 ## Note
 
-The plugin uses a native-helper called `wait-for-process.exe` which enumerates all processes on the current machine and their loaded DLLs. This helper is periodically called to see when a matching process is started. You can find the helper at the path `$VSCODE_EXTENSION_DIR/mauve.wait-for-process-$VERSION/helper/wait-for-process.exe`.
+The plugin uses a native-helper called `wait-for-process.exe` which enumerates all processes on the current machine and their loaded DLLs. This helper is periodically called to see when a matching process is started. You can find the helper at the path `$VSCODE_EXTENSION_DIR/mauve.wait-for-process-fork-$VERSION/helper/wait-for-process.exe`.

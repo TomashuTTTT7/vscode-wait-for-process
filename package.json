@@ -3,7 +3,7 @@
   "displayName": "wait-for-process (fork)",
   "description": "Defines a command which allows you to wait for a process to be running with a specific name or which links to a specific dll, primarily designed to be used by an Attach debug configuration",
   "publisher": "tomashu",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "BSD-3-Clause",
   "repository": {
     "type": "git",

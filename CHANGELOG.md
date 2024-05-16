@@ -4,11 +4,17 @@ All notable changes to the "wait-for-process" extension will be documented in th
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.1.1]
+
+### Changed
+
+- Make helper process faster by natively filtering processes and modules
+
 ## [0.1.0]
 
 ### Added
 
-- Added support for x86 executebles
+- Added support for x86 executables
 - Added cancel button
 
 ### Changed
