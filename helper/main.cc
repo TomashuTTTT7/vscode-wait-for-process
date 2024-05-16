@@ -55,10 +55,10 @@ int _tmain(int argc, TCHAR *argv[]) {
 
   TCHAR* expected_process = NULL;
   TCHAR* expected_module = NULL;
-  for (int i = 0; i < argc; i++) {
-    if (_tcscmp(argv[i], TEXT("processName=")) >= 0) {
+  for (int i = 1; i < argc; i++) {
+    if (_tcsncmp(argv[i], TEXT("processName="), 12) == 0) {
       expected_process = &argv[i][12];
-    } else if (_tcscmp(argv[i], TEXT("moduleName=")) >= 0) {
+    } else if (_tcsncmp(argv[i], TEXT("moduleName="), 11) == 0) {
       expected_module = &argv[i][11];
     }
   }
