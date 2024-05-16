@@ -22,7 +22,7 @@ void PrintProcessInfo(DWORD processID, TCHAR *expected_process_name,
                         sizeof(szProcessName) / sizeof(TCHAR));
 
       if (expected_process_name &&
-          _tcscmp(szProcessName, expected_process_name) != 0) {
+          _tcsicmp(szProcessName, expected_process_name) != 0) {
         CloseHandle(hProcess);
         return;
       }
@@ -33,7 +33,7 @@ void PrintProcessInfo(DWORD processID, TCHAR *expected_process_name,
                           sizeof(szModuleName) / sizeof(TCHAR));
 
         if (expected_module_name) {
-          if (_tcscmp(szModuleName, expected_module_name) != 0)
+          if (_tcsicmp(szModuleName, expected_module_name) != 0)
             continue;
         }
 
